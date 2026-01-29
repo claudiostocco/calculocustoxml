@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+  <NFe>
+    <infNFe Id="NFe35240112345678901234550010000000011000000001" versao="4.00">
+      <det nItem="1">
+        <prod>
+          <cProd>001</cProd>
+          <xProd>Produto Teste 1 - Exemplo de NFe</xProd>
+          <NCM>12345678</NCM>
+          <CFOP>5102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>10.0000</qCom>
+          <vUnCom>50.0000</vUnCom>
+          <vProd>500.00</vProd>
+        </prod>
+        <imposto>
+          <IPI>
+            <IPITrib>
+              <CST>50</CST>
+              <vBC>500.00</vBC>
+              <pIPI>10.00</pIPI>
+              <vIPI>50.00</vIPI>
+            </IPITrib>
+          </IPI>
+        </imposto>
+      </det>
+      <det nItem="2">
+        <prod>
+          <cProd>002</cProd>
+          <xProd>Produto Teste 2 - Sem IPI</xProd>
+          <NCM>87654321</NCM>
+          <CFOP>5102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>5.0000</qCom>
+          <vUnCom>100.0000</vUnCom>
+          <vProd>500.00</vProd>
+        </prod>
+        <imposto>
+          <IPI>
+            <IPINT>
+              <CST>53</CST>
+            </IPINT>
+          </IPI>
+        </imposto>
+      </det>
+      <det nItem="3">
+        <prod>
+          <cProd>003</cProd>
+          <xProd>Produto Teste 3 - Com IPI Menor</xProd>
+          <NCM>11223344</NCM>
+          <CFOP>5102</CFOP>
+          <uCom>UN</uCom>
+          <qCom>20.0000</qCom>
+          <vUnCom>25.0000</vUnCom>
+          <vProd>500.00</vProd>
+        </prod>
+        <imposto>
+          <IPI>
+            <IPITrib>
+              <CST>50</CST>
+              <vBC>500.00</vBC>
+              <pIPI>5.00</pIPI>
+              <vIPI>25.00</vIPI>
+            </IPITrib>
+          </IPI>
+        </imposto>
+      </det>
+    </infNFe>
+  </NFe>
+</nfeProc>
