@@ -2,31 +2,29 @@ class NFeItem {
   final String codigo;
   final String descricao;
   final double valorUnitario;
+  final double quantidade;
   double quantidadeEmbalagem;
-  
+
   NFeItem({
     required this.codigo,
     required this.descricao,
     required this.valorUnitario,
     this.quantidadeEmbalagem = 1.0,
+    required this.quantidade,
   });
-  
+
   double get custoPorEmbalagem {
     if (quantidadeEmbalagem <= 0) return 0.0;
     return valorUnitario / quantidadeEmbalagem;
   }
-  
-  NFeItem copyWith({
-    String? codigo,
-    String? descricao,
-    double? valorUnitario,
-    double? quantidadeEmbalagem,
-  }) {
+
+  NFeItem copyWith({String? codigo, String? descricao, double? valorUnitario, double? quantidadeEmbalagem, double? quantidade}) {
     return NFeItem(
       codigo: codigo ?? this.codigo,
       descricao: descricao ?? this.descricao,
       valorUnitario: valorUnitario ?? this.valorUnitario,
       quantidadeEmbalagem: quantidadeEmbalagem ?? this.quantidadeEmbalagem,
+      quantidade: quantidade ?? this.quantidade,
     );
   }
 }

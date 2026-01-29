@@ -3,20 +3,16 @@ import 'package:xml/xml.dart';
 import '../models/nfe_item.dart';
 
 class NFeProcessorService {
-  Future<List<NFeItem>> processXml({
-    required File xmlFile,
-    double multiplicador = 1.0,
-    double percentualFrete = 0.0,
-  }) async {
+  Future<List<NFeItem>> processXml({required File xmlFile, double multiplicador = 1.0, double percentualFrete = 0.0}) async {
     try {
       final xmlString = await xmlFile.readAsString();
       final document = XmlDocument.parse(xmlString);
-      
+
       final itens = <NFeItem>[];
-      
+
       // Buscar todos os itens (det) da NFe
       final detElements = document.findAllElements('det');
-      
+
       for (var det in detElements) {
         // Extrair dados do produto
         final prod = det.findElements('prod').first;
@@ -24,12 +20,19 @@ class NFeProcessorService {
         final descricao = prod.findElements('xProd').first.innerText;
         final vUnComString = prod.findElements('vUnCom').first.innerText;
         double vUnCom = double.parse(vUnComString.replaceAll(',', '.'));
-        
+        double quantidadeEmbalagem = 1.0; // Valor padrão
+        final uComString = prod.findElements('uCom').first.innerText;
+        if (uComString.toUpperCase() == 'DUZIA') {
+          quantidadeEmbalagem = 12.0;
+        }
+        final qComString = prod.findElements('qCom').first.innerText;
+        double quantidade = double.parse(qComString.replaceAll(',', '.'));
+
         // Aplicar multiplicador se informado e maior que 1
         if (multiplicador > 1.0) {
           vUnCom *= multiplicador;
         }
-        
+
         // Buscar valor do IPI se existir
         double vIPI = 0.0;
         final impostoElements = det.findElements('imposto');
@@ -43,22 +46,26 @@ class NFeProcessorService {
             }
           }
         }
-        
+
         // Somar IPI ao valor unitário
         double valorCalculado = vUnCom + vIPI;
-        
+
         // Aplicar percentual de frete se informado e maior que 0
         if (percentualFrete > 0.0) {
           valorCalculado += valorCalculado * (percentualFrete / 100);
         }
-        
-        itens.add(NFeItem(
-          codigo: codigo,
-          descricao: descricao,
-          valorUnitario: valorCalculado,
-        ));
+
+        itens.add(
+          NFeItem(
+            codigo: codigo,
+            descricao: descricao,
+            valorUnitario: valorCalculado,
+            quantidade: quantidade,
+            quantidadeEmbalagem: quantidadeEmbalagem,
+          ),
+        );
       }
-      
+
       return itens;
     } catch (e) {
       throw Exception('Erro ao processar XML: $e');

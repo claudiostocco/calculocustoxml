@@ -5,12 +5,8 @@ import '../models/nfe_item.dart';
 class NFeItemCard extends StatefulWidget {
   final NFeItem item;
   final Function(double) onQuantidadeChanged;
-  
-  const NFeItemCard({
-    Key? key,
-    required this.item,
-    required this.onQuantidadeChanged,
-  }) : super(key: key);
+
+  const NFeItemCard({super.key, required this.item, required this.onQuantidadeChanged});
 
   @override
   State<NFeItemCard> createState() => _NFeItemCardState();
@@ -22,9 +18,7 @@ class _NFeItemCardState extends State<NFeItemCard> {
   @override
   void initState() {
     super.initState();
-    _quantidadeController = TextEditingController(
-      text: widget.item.quantidadeEmbalagem.toString(),
-    );
+    _quantidadeController = TextEditingController(text: widget.item.quantidadeEmbalagem.toString());
   }
 
   @override
@@ -35,7 +29,7 @@ class _NFeItemCardState extends State<NFeItemCard> {
 
   void _onQuantidadeChanged(String value) {
     if (value.isEmpty) return;
-    
+
     try {
       double quantidade = double.parse(value.replaceAll(',', '.'));
       if (quantidade > 0) {
@@ -52,7 +46,7 @@ class _NFeItemCardState extends State<NFeItemCard> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,63 +56,41 @@ class _NFeItemCardState extends State<NFeItemCard> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
+                  decoration: BoxDecoration(color: Colors.blue.shade100, borderRadius: BorderRadius.circular(4)),
                   child: Text(
                     widget.item.codigo,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue.shade900,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue.shade900),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text(
-                    widget.item.descricao,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  child: Text(widget.item.descricao, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 ),
               ],
             ),
-            
-            const SizedBox(height: 16),
-            
+
+            const SizedBox(height: 2),
+
             // Valor unitário calculado
             Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(8),
-              ),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(8)),
               child: Row(
                 children: [
                   const Icon(Icons.attach_money, size: 20),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Valor Unitário:',
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
+                  const Text('Valor Unitário:', style: TextStyle(fontWeight: FontWeight.w500)),
                   const Spacer(),
                   Text(
                     'R\$ ${widget.item.valorUnitario.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
                   ),
                 ],
               ),
             ),
-            
-            const SizedBox(height: 16),
-            
+
+            const SizedBox(height: 2),
+
             // Quantidade de embalagem e custo por embalagem
             Row(
               children: [
@@ -126,25 +98,19 @@ class _NFeItemCardState extends State<NFeItemCard> {
                   flex: 2,
                   child: TextField(
                     controller: _quantidadeController,
-                    decoration: const InputDecoration(
-                      labelText: 'Qtd. Embalagem',
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
+                    decoration: const InputDecoration(labelText: 'Qtd. Embalagem', border: OutlineInputBorder(), isDense: true),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}')),
-                    ],
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}'))],
                     onChanged: _onQuantidadeChanged,
                   ),
                 ),
-                
+
                 const SizedBox(width: 16),
-                
+
                 Expanded(
                   flex: 3,
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       color: Colors.green.shade50,
                       borderRadius: BorderRadius.circular(8),
@@ -153,21 +119,11 @@ class _NFeItemCardState extends State<NFeItemCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Custo/Embalagem',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.green.shade900,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
+                        Text('Custo/Embalagem', style: TextStyle(fontSize: 12, color: Colors.green.shade900)),
+                        const SizedBox(height: 2),
                         Text(
                           'R\$ ${widget.item.custoPorEmbalagem.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green.shade900,
-                          ),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green.shade900),
                         ),
                       ],
                     ),

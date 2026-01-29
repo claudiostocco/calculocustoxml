@@ -5,11 +5,8 @@ import 'package:file_picker/file_picker.dart';
 
 class NFeInputWidget extends StatefulWidget {
   final Function(File xmlFile, double multiplicador, double percentualFrete) onProcess;
-  
-  const NFeInputWidget({
-    Key? key,
-    required this.onProcess,
-  }) : super(key: key);
+
+  const NFeInputWidget({super.key, required this.onProcess});
 
   @override
   State<NFeInputWidget> createState() => _NFeInputWidgetState();
@@ -30,10 +27,7 @@ class _NFeInputWidgetState extends State<NFeInputWidget> {
 
   Future<void> _pickFile() async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['xml'],
-      );
+      FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['xml']);
 
       if (result != null) {
         setState(() {
@@ -82,12 +76,7 @@ class _NFeInputWidgetState extends State<NFeInputWidget> {
       builder: (context) => AlertDialog(
         title: const Text('Erro'),
         content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))],
       ),
     );
   }
@@ -101,14 +90,11 @@ class _NFeInputWidgetState extends State<NFeInputWidget> {
         children: [
           const Text(
             'Processador de NFe',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
-          
+
           // Seleção de arquivo
           Card(
             child: Padding(
@@ -116,40 +102,28 @@ class _NFeInputWidgetState extends State<NFeInputWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Arquivo XML da NFe:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  const Text('Arquivo XML da NFe:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
                           _selectedFile?.path.split('/').last ?? 'Nenhum arquivo selecionado',
-                          style: TextStyle(
-                            color: _selectedFile != null ? Colors.green : Colors.grey,
-                          ),
+                          style: TextStyle(color: _selectedFile != null ? Colors.green : Colors.grey),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      ElevatedButton.icon(
-                        onPressed: _pickFile,
-                        icon: const Icon(Icons.folder_open),
-                        label: const Text('Selecionar'),
-                      ),
+                      ElevatedButton.icon(onPressed: _pickFile, icon: const Icon(Icons.folder_open), label: const Text('Selecionar')),
                     ],
                   ),
                 ],
               ),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Multiplicador
           TextField(
             controller: _multiplicadorController,
@@ -160,13 +134,11 @@ class _NFeInputWidgetState extends State<NFeInputWidget> {
               helperText: 'Aplicado ao valor unitário se maior que 1',
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}')),
-            ],
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}'))],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Percentual de frete
           TextField(
             controller: _freteController,
@@ -178,29 +150,18 @@ class _NFeInputWidgetState extends State<NFeInputWidget> {
               helperText: 'Percentual aplicado ao valor calculado',
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-            ],
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))],
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Botão processar
           ElevatedButton(
             onPressed: _isProcessing ? null : _processFile,
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-            ),
+            style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
             child: _isProcessing
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Text(
-                    'Iniciar Processamento',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                : const Text('Iniciar Processamento', style: TextStyle(fontSize: 16)),
           ),
         ],
       ),
