@@ -6,7 +6,11 @@ class NFeItemCard extends StatefulWidget {
   final NFeItem item;
   final Function(double) onQuantidadeChanged;
 
-  const NFeItemCard({super.key, required this.item, required this.onQuantidadeChanged});
+  const NFeItemCard({
+    super.key,
+    required this.item,
+    required this.onQuantidadeChanged,
+  });
 
   @override
   State<NFeItemCard> createState() => _NFeItemCardState();
@@ -18,7 +22,9 @@ class _NFeItemCardState extends State<NFeItemCard> {
   @override
   void initState() {
     super.initState();
-    _quantidadeController = TextEditingController(text: widget.item.quantidadeEmbalagem.toString());
+    _quantidadeController = TextEditingController(
+      text: widget.item.quantidadeEmbalagem.toString(),
+    );
   }
 
   @override
@@ -55,38 +61,33 @@ class _NFeItemCardState extends State<NFeItemCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(color: Colors.blue.shade100, borderRadius: BorderRadius.circular(4)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade100,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                   child: Text(
                     widget.item.codigo,
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue.shade900),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue.shade900,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text(widget.item.descricao, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  child: Text(
+                    widget.item.descricao,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
-            ),
-
-            const SizedBox(height: 2),
-
-            // Valor unitário calculado
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(8)),
-              child: Row(
-                children: [
-                  const Icon(Icons.attach_money, size: 20),
-                  const SizedBox(width: 8),
-                  const Text('Valor Unitário:', style: TextStyle(fontWeight: FontWeight.w500)),
-                  const Spacer(),
-                  Text(
-                    'R\$ ${widget.item.valorUnitario.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
-                  ),
-                ],
-              ),
             ),
 
             const SizedBox(height: 2),
@@ -94,13 +95,74 @@ class _NFeItemCardState extends State<NFeItemCard> {
             // Quantidade de embalagem e custo por embalagem
             Row(
               children: [
+                // Valor unitário calculado
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Valor Unitário',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      //const Spacer(),
+                      Text(
+                        'R\$ ${widget.item.valorUnitario.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                // Quantidade na NFe
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Quantidade',
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        widget.item.quantidade.toString(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
                 Expanded(
                   flex: 2,
                   child: TextField(
                     controller: _quantidadeController,
-                    decoration: const InputDecoration(labelText: 'Qtd. Embalagem', border: OutlineInputBorder(), isDense: true),
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}'))],
+                    decoration: const InputDecoration(
+                      labelText: 'Qtd. Embalagem',
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+\.?\d{0,4}'),
+                      ),
+                    ],
                     onChanged: _onQuantidadeChanged,
                   ),
                 ),
@@ -119,11 +181,21 @@ class _NFeItemCardState extends State<NFeItemCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Custo/Embalagem', style: TextStyle(fontSize: 12, color: Colors.green.shade900)),
+                        Text(
+                          'Custo/Embalagem',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green.shade900,
+                          ),
+                        ),
                         const SizedBox(height: 2),
                         Text(
                           'R\$ ${widget.item.custoPorEmbalagem.toStringAsFixed(2)}',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green.shade900),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green.shade900,
+                          ),
                         ),
                       ],
                     ),
